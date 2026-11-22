@@ -1,6 +1,6 @@
 // Builds the installable design site: node build.js  (run inside design-pwa/src)
 const fs=require('fs'),path=require('path');
-const VERSION='v1.2 · 22 Nov 2026 · login choice';
+const VERSION='v1.3 · 22 Nov 2026 · plans fix + gallery';
 const badge=`(function(){var d=document.createElement('div');d.id='gfver';d.textContent='${VERSION}';d.style.cssText='position:fixed;top:max(4px,env(safe-area-inset-top,0px));right:8px;z-index:2147483647;font:700 10px/1 system-ui,sans-serif;background:#F2B61C;color:#1B2B3A;padding:4px 8px;border-radius:999px;pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.25)';document.body.appendChild(d)})();`;
 const rd=f=>fs.readFileSync(f,'utf8'); const OUT=path.join(__dirname,'..');
 const roles={cd:['GoFarm Customer and Delivery','Customer and Delivery apps','customer-delivery.html'],mgr:['GoFarm Manager App','Manager app','manager.html'],own:['GoFarm Owner App','Owner app','owner.html'],acc:['GoFarm Accountant Dashboard','Accountant dashboard','accountant.html']};
