@@ -1,7 +1,7 @@
 // Builds the installable design site: node build.js  (run inside design-pwa/src)
 const fs=require('fs'),path=require('path');
 const THEME=JSON.parse(fs.readFileSync(path.join(__dirname,'theme.json'),'utf8')); delete THEME._note;
-const VERSION='v1.4 · 22 Nov 2026 · brand colours';
+const VERSION='v1.5 · 22 Nov 2026 · veg banner image';
 const badge=`(function(){var d=document.createElement('div');d.id='gfver';d.textContent='${VERSION}';d.style.cssText='position:fixed;top:max(4px,env(safe-area-inset-top,0px));right:8px;z-index:2147483647;font:700 10px/1 system-ui,sans-serif;background:${THEME.accent};color:${THEME.text};padding:4px 8px;border-radius:999px;pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.25)';document.body.appendChild(d)})();`;
 // theme.json key -> CSS variable (the app reads colours only through these variables)
 const VARS={g:'primary',gd:'primaryDark',gl:'primaryLight',sage:'secondary',gs:'secondarySoft',gs2:'secondarySofter',gold:'accent',golds:'accentSoft',warn:'accentDark',warns:'accentSoft',ink:'text',mut:'muted',page:'background',ln:'line',mutedbg:'mutedBg',bg:'background',card:'card',fg:'text',muted:'muted',line:'line',soft:'secondarySoft',accent:'primary',chip:'secondarySoft'};
