@@ -39,9 +39,9 @@ function gallery(app) {
 }
 // ---- design system tab ----
 const SW = [
-  ['Brand', [['Primary green', '#0F7038', 'Buttons, links, selected tab'], ['Dark green', '#0B5A2D', 'Pressed state, web sidebar'], ['Soft green', '#E3F2E8', 'Chips, soft buttons, info alerts'], ['Gold', '#F2B61C', 'Accent, progress, the "Go" in the logo'], ['Soft gold', '#FFF4D6', 'Highlights']]],
-  ['Status', [['Red', '#D93A35', 'Locked, overdue, errors, missed'], ['Soft red', '#FDECEB', 'Locked rows and alerts'], ['Amber', '#B26A00', 'Paused, photo-only proof, warnings'], ['Soft amber', '#FFF3DC', 'Warning alerts']]],
-  ['Neutral', [['Ink', '#1B2B3A', 'Text'], ['Muted', '#6A7885', 'Secondary text, icons'], ['Page', '#F6FAF4', 'App background'], ['Card', '#FFFFFF', 'Cards and inputs'], ['Muted fill', '#EEF1EC', 'Muted badge, disabled'], ['Line', '#E2EADF', 'Borders and dividers']]],
+  ['Brand', [['Forest green (primary)', THEME.primary, 'Buttons, links, headers, selected tab'], ['Dark forest', THEME.primaryDark, 'Pressed state, web sidebar'], ['Sage green (secondary)', THEME.secondary, 'Secondary accents, decoration'], ['Soft sage', THEME.secondarySoft, 'Chips, soft buttons, info alerts'], ['Muted gold (accent)', THEME.accent, 'Accent, progress, highlights'], ['Soft gold', THEME.accentSoft, 'Highlights, warning alerts']]],
+  ['Status', [['Red', '#D93A35', 'Locked, overdue, errors, missed'], ['Soft red', '#FDECEB', 'Locked rows and alerts'], ['Deep gold', THEME.accentDark, 'Paused, photo-only proof, warnings'], ['WhatsApp green', '#25D366', 'WhatsApp buttons only']]],
+  ['Neutral', [['Charcoal', THEME.text, 'Text'], ['Muted', THEME.muted, 'Secondary text, icons'], ['Warm cream', THEME.background, 'App background'], ['Card', THEME.card, 'Cards and inputs'], ['Muted fill', THEME.mutedBg, 'Muted badge, disabled'], ['Line', THEME.line, 'Borders and dividers']]],
 ];
 function reqTable() {
   const map = {}; for (const s of ALL) for (const r of s.req.split(',').map(x => x.trim())) { if (!r) continue; (map[r] = map[r] || []).push(s); }
@@ -52,7 +52,7 @@ function reqTable() {
 function foundations() {
   let h = `<div class="intro hero2"><h1>GoFarm app design</h1><p>The Customer app and the Delivery app, with the colours, type and components shared by every GoFarm app. The Manager app, the Owner app and the Accountant dashboard each have their own page. Every screen is labelled with its SRS requirement.</p><div class="stats"><span>${S.cus.length} customer screens</span><span>${S.del.length} delivery screens</span><span>${ALL.length} in total</span></div></div>`;
   h += `<h2 class="sec-h">Colours</h2><p class="sec-p">Green is the action colour. Gold marks good news and the brand accent. Red is only for things that need action: locked, overdue, missed.</p>`;
-  for (const [g, items] of SW) h += `<h3 style="font-size:13px;color:var(--muted);margin:18px 0 8px">${g}</h3><div class="big-grid">${items.map(([n, hex, use]) => `<div class="sw"><i style="background:${hex};${hex === '#FFFFFF' ? 'box-shadow:inset 0 0 0 1px #E2EADF' : ''}"></i><div><b>${n}  ${hex}</b><span>${use}</span></div></div>`).join('')}</div>`;
+  for (const [g, items] of SW) h += `<h3 style="font-size:13px;color:var(--muted);margin:18px 0 8px">${g}</h3><div class="big-grid">${items.map(([n, hex, use]) => `<div class="sw"><i style="background:${hex};${hex.toUpperCase() === '#FFFFFF' ? 'box-shadow:inset 0 0 0 1px var(--ln)' : ''}"></i><div><b>${n}  ${hex}</b><span>${use}</span></div></div>`).join('')}</div>`;
   const ty = [['Display 28 Bold', 'font-size:28px;font-weight:700', 'GoFarm'], ['Page title 20 Bold', 'font-size:20px;font-weight:700', 'My subscriptions'], ['Section 18 Bold', 'font-size:18px;font-weight:700', 'This month'], ['List title 17 SemiBold', 'font-size:17px;font-weight:600', 'Full cream cow milk, 1 litre'], ['Body 14 Regular', 'font-size:14px', 'Delivered every morning before 7 AM in Baner.'], ['Body strong 14 SemiBold', 'font-size:14px;font-weight:600', '1 litre, Morning'], ['Caption 12 Regular', 'font-size:12px;color:var(--muted)', 'Change before 9:00 PM to skip tomorrow morning.'], ['Stat 26 Bold', 'font-size:26px;font-weight:700', '₹1,240'], ['Button 15 Bold', 'font-size:15px;font-weight:700', 'Pay now'], ['Tab label 11 SemiBold', 'font-size:11px;font-weight:600', 'Home']];
   h += `<h2 class="sec-h">Type: Open Sans</h2><p class="sec-p">The same font the apps already ship with. Regular, SemiBold and Bold only. Marathi and Hindi use the same sizes with a matching Devanagari font once the owner confirms languages.</p><div class="spec">${ty.map(([l, st, s]) => `<div class="ty"><small>${l}</small><span style="${st}">${s}</span></div>`).join('')}</div>`;
   h += `<h2 class="sec-h">Shape, space and rules</h2><p class="sec-p">Page margin 16, gap between cards 14, buttons 48 high with radius 14, cards radius 16 with a soft shadow, chips radius 12, status pills fully round. Every tap target is at least 44 by 44, and delivery boy screens use the biggest buttons.</p>`;
@@ -123,7 +123,7 @@ function appMode() {
   function draw(dir) {
     const W = innerWidth, H = innerHeight; const s = W <= 520 ? W / 390 : Math.min(1.1, H / 844);
     const fw = 390 * s, id = stack[stack.length - 1], sc = BYID[id];
-    fs.style.cssText = 'position:fixed;inset:0;background:#F6FAF4;display:flex;justify-content:center;overflow:hidden';
+    fs.style.cssText = 'position:fixed;inset:0;background:var(--page);display:flex;justify-content:center;overflow:hidden';
     fs.innerHTML = `<div class="appscr" style="width:${fw}px;height:${H}px;position:relative;overflow:hidden;animation:${dir ? 'appin .22s ease-out' : 'none'}">${sc.html.replace('class="gf', `style="transform:scale(${s});transform-origin:0 0;height:${H / s}px" class="gf`)}</div>`;
     try { document.title = sc.name; } catch (e) { }
     if (id === 'cus-home') { try { localStorage.setItem('gf-cus-in', '1'); } catch (x) { } }

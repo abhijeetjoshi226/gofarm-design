@@ -51,7 +51,7 @@ const IC = {
  shield:"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z",
  clock:"M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z M12 6v6l4 2",
 };
-const ic = (n, s = 24, c = 'currentColor') => `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${IC[n] || IC.drop}"/></svg>`;
+const ic = (n, s = 24, c = 'currentColor') => `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" style="stroke:${c}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${IC[n] || IC.drop}"/></svg>`;
 const go = (g) => g ? ` data-go="${g}"` : '';
 // buttons, pills, chips
 const btn = (l, st = 'primary', g, ex = '') => `<div class="btn ${st}"${go(g)} ${ex}>${l}</div>`;
@@ -59,11 +59,11 @@ const pill = (l, t = '') => `<span class="pill ${t}">${l}</span>`;
 const chip = (l, on, g) => `<span class="chip${on ? ' on' : ''}"${go(g)}>${l}</span>`;
 const chips = (arr, on) => `<div class="chips">${arr.map((x, i) => chip(x, i === on)).join('')}</div>`;
 // inputs
-const fld = (l, v = '', st = '', icon) => `<div class="fld ${st}"><label>${l}</label><div class="${v ? '' : 'ph'}">${icon ? ic(icon, 18, '#6A7885') : ''}<span class="f1">${v || 'Type here'}</span></div>${st === 'err' ? '<em>This does not look right.</em>' : ''}</div>`;
-const sel = (l, v) => `<div class="fld"><label>${l}</label><div><span class="f1">${v}</span>${ic('down', 18, '#6A7885')}</div></div>`;
+const fld = (l, v = '', st = '', icon) => `<div class="fld ${st}"><label>${l}</label><div class="${v ? '' : 'ph'}">${icon ? ic(icon, 18, 'var(--mut)') : ''}<span class="f1">${v || 'Type here'}</span></div>${st === 'err' ? '<em>This does not look right.</em>' : ''}</div>`;
+const sel = (l, v) => `<div class="fld"><label>${l}</label><div><span class="f1">${v}</span>${ic('down', 18, 'var(--mut)')}</div></div>`;
 // containers
 const card = (inner, cls = '', g) => `<div class="card ${cls}"${go(g)}>${inner}</div>`;
-const lc = (title, sub, icon = 'invoice', g, trail, tone = '') => `<div class="lc"${go(g)}><span class="ib ${tone}">${ic(icon, 22)}</span><div class="col f1"><b>${title}</b><small>${sub || ''}</small></div>${trail !== undefined ? trail : ic('chevron', 22, '#6A7885')}</div>`;
+const lc = (title, sub, icon = 'invoice', g, trail, tone = '') => `<div class="lc"${go(g)}><span class="ib ${tone}">${ic(icon, 22)}</span><div class="col f1"><b>${title}</b><small>${sub || ''}</small></div>${trail !== undefined ? trail : ic('chevron', 22, 'var(--mut)')}</div>`;
 const pc = (name, detail, price, g, tag) => `<div class="pc"${go(g)}><span class="im">${ic('drop', 32)}</span><div class="col f1"><b>${name}</b><small>${detail}</small><span class="pr">${price}</span></div>${tag || '<span class="go">View</span>'}</div>`;
 const pcImg = (name, detail, price, g, img) => `<div class="pc"${go(g)}><span class="im photo"><img src="${img}" alt="${name}"></span><div class="col f1"><b>${name}</b><small>${detail}</small><span class="pr">${price}</span></div><span class="go">View</span></div>`;
 const gc = (name, detail, price, g, img) => `<div class="gc"${go(g)}><div class="gi">${img ? `<img src="${img}" alt="${name}">` : ic('drop', 44)}</div><div class="gb"><b>${name}</b><small>${detail}</small><span class="pr">${price}</span><span class="go">View</span></div></div>`;
@@ -111,11 +111,11 @@ function web(active, title, content, filt) {
   const nv = (arr) => arr.map(([i, l]) => `<div class="nv${l === active ? ' on' : ''}">${ic(i, 18)}${l}</div>`).join('');
   return `<div class="gf web"><div class="side"><div class="logochip"><img class="logoimg" src="${IMG.logo}" alt="GoFarm" style="width:150px"></div><div class="grp">REPORTS</div>${nv(WEBNAV)}<div class="grp">STOCK</div>${nv(STOCKNAV)}<div class="f1"></div><div class="nv">${ic('shield', 18)}Reports are read-only</div></div><div class="main"><div class="tbar"><h2>${title}</h2><div class="row">${avatar('Meera Shah')}<div class="col"><b style="font-size:13px">Meera Shah</b><span style="font-size:11.5px;color:var(--mut)">Accountant</span></div></div></div>${filt === false ? '' : FILT()}<div class="ct">${content}</div></div></div>`;
 }
-const barsvg = (data, w = 560, h = 190, colors = ['#0F7038', '#F2B61C']) => {
-  const max = Math.max(...data.flatMap(d => d.v)); const n = data.length; const bw = (w - 50) / n; let s = `<svg viewBox="0 0 ${w} ${h + 26}" width="100%" role="img" aria-label="Bar chart"><g stroke="#E2EADF">${[0, 1, 2, 3].map(i => `<line x1="40" x2="${w}" y1="${8 + i * (h - 8) / 3}" y2="${8 + i * (h - 8) / 3}"/>`).join('')}</g>`;
+const barsvg = (data, w = 560, h = 190, colors = ['var(--g)', 'var(--gold)']) => {
+  const max = Math.max(...data.flatMap(d => d.v)); const n = data.length; const bw = (w - 50) / n; let s = `<svg viewBox="0 0 ${w} ${h + 26}" width="100%" role="img" aria-label="Bar chart"><g style="stroke:var(--ln)">${[0, 1, 2, 3].map(i => `<line x1="40" x2="${w}" y1="${8 + i * (h - 8) / 3}" y2="${8 + i * (h - 8) / 3}"/>`).join('')}</g>`;
   const fmt = v => v >= 100000 ? (v / 100000).toFixed(1) + ' L' : v >= 1000 ? (v / 1000).toFixed(v % 1000 ? 1 : 0) + 'k' : Math.round(v);
-  [0, 1, 2, 3].forEach(i => { s += `<text x="34" y="${12 + i * (h - 8) / 3}" text-anchor="end" font-size="10" fill="#6A7885">${fmt(max * (1 - i / 3))}</text>`; });
-  data.forEach((d, i) => { const gw = bw * 0.7 / d.v.length; d.v.forEach((v, j) => { const bh = (h - 8) * v / max; s += `<rect x="${44 + i * bw + j * gw}" y="${h - bh}" width="${gw - 2}" height="${bh}" rx="3" fill="${colors[j % colors.length]}"/>`; }); s += `<text x="${44 + i * bw + bw * 0.35}" y="${h + 16}" text-anchor="middle" font-size="10" fill="#6A7885">${d.l}</text>`; });
+  [0, 1, 2, 3].forEach(i => { s += `<text x="34" y="${12 + i * (h - 8) / 3}" text-anchor="end" font-size="10" style="fill:var(--mut)">${fmt(max * (1 - i / 3))}</text>`; });
+  data.forEach((d, i) => { const gw = bw * 0.7 / d.v.length; d.v.forEach((v, j) => { const bh = (h - 8) * v / max; s += `<rect x="${44 + i * bw + j * gw}" y="${h - bh}" width="${gw - 2}" height="${bh}" rx="3" fill="${colors[j % colors.length]}"/>`; }); s += `<text x="${44 + i * bw + bw * 0.35}" y="${h + 16}" text-anchor="middle" font-size="10" style="fill:var(--mut)">${d.l}</text>`; });
   return s + '</svg>';
 };
 // registry: S[app] = list of screens

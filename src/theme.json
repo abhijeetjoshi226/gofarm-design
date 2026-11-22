@@ -1,0 +1,18 @@
+{
+  "_note": "Single source of truth for GoFarm colours (GoFarm Dairy website palette). build.js turns this into CSS variables and a JS THEME object. Edit here, then run: node build.js",
+  "primary": "#35533B",
+  "primaryDark": "#243A29",
+  "primaryLight": "#46694E",
+  "secondary": "#899B7A",
+  "secondarySoft": "#E6EBDF",
+  "secondarySofter": "#D7DFCC",
+  "accent": "#C5A15A",
+  "accentSoft": "#F3EAD3",
+  "accentDark": "#86672A",
+  "background": "#F5F1E7",
+  "card": "#FFFFFF",
+  "text": "#292E28",
+  "muted": "#5F665A",
+  "line": "#E2DDCE",
+  "mutedBg": "#EAE5D8"
+}
