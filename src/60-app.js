@@ -115,7 +115,8 @@ function appMode() {
   document.documentElement.classList.add('appm');
   document.querySelector('.top').style.display = 'none'; document.body.style.padding = '0'; view.style.maxWidth = 'none'; view.style.margin = '0';
   const h = location.hash.slice(1);
-  const startMap = { cus: 'cus-splash', del: 'del-signin', pv: FLOWS[0] ? FLOWS[0][1] : '', mgr: 'own-signin', own: 'own-signin' };
+  let signedIn = false; try { signedIn = localStorage.getItem('gf-cus-in') === '1'; } catch (x) { }
+  const startMap = { cus: signedIn ? 'cus-home' : 'cus-splash', del: 'del-signin', pv: FLOWS[0] ? FLOWS[0][1] : '', mgr: 'own-signin', own: 'own-signin' };
   let stack = [BYID[h] ? h : (BYID[startMap[h]] ? startMap[h] : (FLOWS[0] ? FLOWS[0][1] : ALL[0].id))];
   view.innerHTML = '<div id="appfs"></div>';
   const fs = document.getElementById('appfs');
@@ -125,6 +126,7 @@ function appMode() {
     fs.style.cssText = 'position:fixed;inset:0;background:#F6FAF4;display:flex;justify-content:center;overflow:hidden';
     fs.innerHTML = `<div class="appscr" style="width:${fw}px;height:${H}px;position:relative;overflow:hidden;animation:${dir ? 'appin .22s ease-out' : 'none'}">${sc.html.replace('class="gf', `style="transform:scale(${s});transform-origin:0 0;height:${H / s}px" class="gf`)}</div>`;
     try { document.title = sc.name; } catch (e) { }
+    if (id === 'cus-home') { try { localStorage.setItem('gf-cus-in', '1'); } catch (x) { } }
   }
   fs.addEventListener('click', e => {
     if (e.target.closest('.sb')) { location.href = 'index.html'; return; }
