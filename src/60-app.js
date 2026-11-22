@@ -110,8 +110,39 @@ function lightbox(id) {
   d.addEventListener('click', close); document.addEventListener('keydown', esc); document.body.appendChild(d); d.querySelector('.lb-x').focus();
 }
 window.addEventListener('resize', setScale);
-window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (h && h !== cur) render(h); });
-render(location.hash.slice(1) || TABS[0][0]);
+const APPMODE = ROLE !== 'acc' && (matchMedia('(display-mode: standalone)').matches || navigator.standalone === true || /[?&]app=1/.test(location.search));
+function appMode() {
+  document.documentElement.classList.add('appm');
+  document.querySelector('.top').style.display = 'none'; document.body.style.padding = '0'; view.style.maxWidth = 'none'; view.style.margin = '0';
+  const h = location.hash.slice(1);
+  const startMap = { cus: 'cus-splash', del: 'del-signin', pv: FLOWS[0] ? FLOWS[0][1] : '', mgr: 'own-signin', own: 'own-signin' };
+  let stack = [BYID[h] ? h : (BYID[startMap[h]] ? startMap[h] : (FLOWS[0] ? FLOWS[0][1] : ALL[0].id))];
+  view.innerHTML = '<div id="appfs"></div>';
+  const fs = document.getElementById('appfs');
+  function draw(dir) {
+    const W = innerWidth, H = innerHeight; const s = W <= 520 ? W / 390 : Math.min(1.1, H / 844);
+    const fw = 390 * s, id = stack[stack.length - 1], sc = BYID[id];
+    fs.style.cssText = 'position:fixed;inset:0;background:#F6FAF4;display:flex;justify-content:center;overflow:hidden';
+    fs.innerHTML = `<div class="appscr" style="width:${fw}px;height:${H}px;position:relative;overflow:hidden;animation:${dir ? 'appin .22s ease-out' : 'none'}">${sc.html.replace('class="gf', `style="transform:scale(${s});transform-origin:0 0;height:${H / s}px" class="gf`)}</div>`;
+    try { document.title = sc.name; } catch (e) { }
+  }
+  fs.addEventListener('click', e => {
+    if (e.target.closest('.sb')) { location.href = 'index.html'; return; }
+    const g = e.target.closest('[data-go]'); if (!g || !BYID[g.dataset.go]) return;
+    const t = g.dataset.go;
+    if (stack.length > 1 && stack[stack.length - 2] === t) { history.back(); return; }
+    stack.push(t); try { history.pushState({ n: stack.length }, ''); } catch (x) { } draw(1);
+  });
+  addEventListener('popstate', () => { if (stack.length > 1) { stack.pop(); draw(1); } else location.href = 'index.html'; });
+  addEventListener('resize', () => draw(0));
+  try { history.replaceState({ n: 1 }, ''); } catch (x) { }
+  draw(0);
+}
+if (APPMODE) { /* full screen app */ appMode(); }
+else {
+  window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (h && h !== cur) render(h); });
+  render(location.hash.slice(1) || TABS[0][0]);
+}
 
 window.vw = (id, k = 0.68) => { document.querySelectorAll('.lb,.vw').forEach(x => x.remove()); const s = BYID[id]; const d = document.createElement('div'); d.className = 'vw'; d.style.cssText = 'position:fixed;inset:0;z-index:99;background:#cfd8cf;display:flex;justify-content:center;align-items:flex-start;padding-top:4px'; const w = s.app === 'acc'; const kk = w ? 0.62 : k; d.innerHTML = '<div style="width:' + ((w ? 1280 : 390) * kk) + 'px;height:' + ((w ? 800 : 844) * kk) + 'px;position:relative;overflow:hidden;border-radius:8px">' + s.html.replace('class="gf', 'style="transform:scale(' + kk + ');transform-origin:0 0" class="gf') + '</div>'; document.body.appendChild(d); return id; };
 window.audit = () => { render(cur); const out = []; document.querySelectorAll('.fig').forEach(f => { const g = f.querySelector('.gf'); const bd = g && g.querySelector('.bd, .ct'); if (bd && bd.scrollHeight > bd.clientHeight + 1) out.push(f.id + ' +' + (bd.scrollHeight - bd.clientHeight)); }); return out; };
