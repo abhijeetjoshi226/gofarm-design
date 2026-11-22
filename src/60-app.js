@@ -110,7 +110,7 @@ function lightbox(id) {
   d.addEventListener('click', close); document.addEventListener('keydown', esc); document.body.appendChild(d); d.querySelector('.lb-x').focus();
 }
 window.addEventListener('resize', setScale);
-const APPMODE = ROLE !== 'acc' && (matchMedia('(display-mode: standalone)').matches || navigator.standalone === true || /[?&]app=1/.test(location.search));
+const APPMODE = ROLE !== 'acc' && !/[?&]app=0/.test(location.search) && (matchMedia('(display-mode: standalone)').matches || navigator.standalone === true || /[?&]app=1/.test(location.search) || Math.min(screen.width, innerWidth) <= 520);
 function appMode() {
   document.documentElement.classList.add('appm');
   document.querySelector('.top').style.display = 'none'; document.body.style.padding = '0'; view.style.maxWidth = 'none'; view.style.margin = '0';
