@@ -4,7 +4,7 @@ const DT = (l) => ['del', l];
 const stopRow = (n, name, addr, items, st) => {
   const tone = { done: '', miss: 'bad', next: 'cur', todo: 'muted', paused: 'warn', photo: 'warn' }[st]; const lab = { done: 'Delivered', miss: 'Missed', next: 'Next', todo: 'Upcoming', paused: 'Paused', photo: 'Photo' }[st];
   const ib = { done: '', miss: 'red', next: 'cur', todo: 'muted', paused: 'gold', photo: 'gold' }[st];
-  return `<div class="lc" data-go="del-stop" style="${st === 'next' ? 'border:2px solid var(--g)' : ''}"><span class="ib ${ib}"><b>${n}</b></span><div class="col f1"><b style="font-size:15px">${name}</b><small>${addr}  |  ${items}</small></div>${pill(lab, tone)}</div>`;
+  return `<div class="lc" data-go="del-stop" style="${{ done: 'background:var(--gs);border-color:transparent', miss: 'background:var(--reds);border-color:transparent', paused: 'background:var(--warns);border-color:transparent', photo: 'background:var(--warns);border-color:transparent', todo: 'background:var(--mutedbg);border-color:transparent', next: 'border:2px solid var(--g)' }[st]}"><span class="ib ${ib}"><b>${n}</b></span><div class="col f1"><b style="font-size:15px">${name}</b><small>${addr}  |  ${items}</small></div></div>`;
 };
 const D1 = 'Start of day';
 add('del', D1, 'del-signin', 'Sign in', 'DEL-01', 'Must', screen({ cls: 'center', body: `<div style="height:16px"></div>${wm(44)}<h3 class="t">Delivery sign in</h3><p class="m">Your manager creates your login. You cannot sign up yourself.</p><div style="width:100%">${fld('Mobile number', '+91  98220 77310', 'foc')}</div>${btn('Send code', 'primary', 'del-checkin', 'style="width:100%"')}<div style="width:100%">${al('warn', 'Number not found?', 'Ask your manager to add you. Unknown numbers cannot register.')}</div>` }));
