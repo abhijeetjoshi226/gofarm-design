@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GoFarm App Design</title>
+<meta name="theme-color" content="#0F7038"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="GoFarm Design">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#F6FAF4;--card:#fff;--fg:#1B2B3A;--mut:#5E6C79;--line:#DDE7D9;--g:#0F7038;--gd:#0B5A2D;--gold:#F2B61C;--soft:#E3F2E8;--font:'Open Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+@media(prefers-color-scheme:dark){:root{--bg:#0E1A14;--card:#15251C;--fg:#E7F0EA;--mut:#9BB0A3;--line:#25382D;--soft:#173626}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);min-height:100vh;padding:env(safe-area-inset-top,0) max(16px,env(safe-area-inset-right,0)) max(24px,env(safe-area-inset-bottom,0)) max(16px,env(safe-area-inset-left,0))}
+.w{max-width:760px;margin:0 auto}
+header{background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;border-radius:0 0 28px 28px;margin:0 -16px 22px;padding:28px 22px 30px;position:relative;overflow:hidden}
+header:before{content:"";position:absolute;right:-60px;top:-70px;width:230px;height:230px;border-radius:50%;background:var(--gold)}
+header>*{position:relative}header img{width:170px;background:#fff;border-radius:14px;padding:10px 14px;display:block}
+h1{font-size:clamp(24px,5vw,32px);margin:18px 0 6px;letter-spacing:-.01em}header p{margin:0;opacity:.92;max-width:48ch;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+a.c{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;color:inherit;text-decoration:none;box-shadow:0 6px 18px rgba(15,60,35,.07)}
+a.c:focus-visible,a.c:hover{border-color:var(--g);outline:none}
+a.c b{font-size:17px}a.c span{font-size:13.5px;color:var(--mut);line-height:1.45}
+a.c i{font-style:normal;font-weight:700;font-size:12px;color:var(--g);background:var(--soft);align-self:flex-start;padding:4px 10px;border-radius:999px}
+h2{font-size:15px;margin:26px 0 10px;color:var(--mut);letter-spacing:.04em;text-transform:uppercase}
+.tip{margin-top:22px;background:var(--soft);border-radius:16px;padding:14px 16px;font-size:13.5px;line-height:1.55}
+#inst{display:none;margin-top:16px;font:700 14px var(--font);background:var(--gold);color:#1B2B3A;border:0;border-radius:12px;padding:12px 18px;cursor:pointer}
+</style></head><body><div class="w">
+<header><img src="icons/icon-192.png" alt="GoFarm" style="display:none"><h1>GoFarm app design</h1><p>Pick an app to see its screens, or open the click-through to tap around like a real user.</p><button id="inst" type="button">Install this app</button></header>
+<h2>Mobile apps</h2>
+<div class="grid">
+<a class="c" href="customer-delivery.html#cus"><i>Customer</i><b>Customer app</b><span>Sign up, subscribe, pause, calendar, bills and payments.</span></a>
+<a class="c" href="customer-delivery.html#del"><i>Delivery</i><b>Delivery app</b><span>Check in, route, door photo proof, offline, return stock.</span></a>
+<a class="c" href="manager.html"><i>Manager</i><b>Manager app</b><span>Customers, delivery boys, dues and bills on WhatsApp in one tap.</span></a>
+<a class="c" href="owner.html"><i>Owner</i><b>Owner app</b><span>All regions, set-up, staff, stock, day-end approval, billing.</span></a>
+</div>
+<h2>Web</h2>
+<div class="grid"><a class="c" href="accountant.html"><i>Accountant</i><b>Accountant dashboard</b><span>Nine reports plus the stock section.</span></a></div>
+<h2>Click-through</h2>
+<div class="grid">
+<a class="c" href="customer-delivery.html#pv"><b>Customer and delivery</b><span>Tap through one phone.</span></a>
+<a class="c" href="manager.html#pv"><b>Manager</b><span>Tap through one phone.</span></a>
+<a class="c" href="owner.html#pv"><b>Owner</b><span>Tap through one phone.</span></a></div>
+<p class="tip">Open once with internet. After that it works offline. Add to Home screen (phone) or Install (Chrome or Edge address bar) to get an app icon.</p>
+</div>
+<script>
+let dp;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;const b=document.getElementById('inst');b.style.display='inline-block';b.onclick=()=>{dp.prompt();dp=null;b.style.display='none'}});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script></body></html>

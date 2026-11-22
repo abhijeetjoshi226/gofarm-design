@@ -1,0 +1,16 @@
+{
+  "name": "GoFarm App Design",
+  "short_name": "GoFarm Design",
+  "description": "GoFarm customer, delivery, manager, owner and accountant app designs for client demos.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F6FAF4",
+  "theme_color": "#0F7038",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
